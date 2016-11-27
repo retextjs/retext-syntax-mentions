@@ -1,14 +1,5 @@
-/**
- * @author Titus Wormer
- * @copyright 2016 Titus Wormer
- * @license MIT
- * @module
- * @fileoverview Test suite for `retext-syntax-mentions`.
- */
-
 'use strict';
 
-/* Dependencies. */
 var test = require('tape');
 var retext = require('retext');
 var u = require('unist-builder');
@@ -16,7 +7,6 @@ var mentions = require('./');
 
 var processor = retext().use(mentions);
 
-/* Tests. */
 test('mentions()', function (t) {
   t.deepEqual(
     processor.run(processor.parse('This @wooorm and @foo/bar.')),
