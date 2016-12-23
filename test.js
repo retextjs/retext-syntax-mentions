@@ -64,6 +64,34 @@ test('mentions()', function (t) {
     'should work without position'
   );
 
+  t.deepEqual(
+    processor.run(processor.parse('One dash: @foo-bar & multiple dashes: @alpha-bravo/charlie-delta.', {position: false})),
+    u('RootNode', [
+      u('ParagraphNode', [
+        u('SentenceNode', [
+          u('WordNode', [u('TextNode', 'One')]),
+          u('WhiteSpaceNode', ' '),
+          u('WordNode', [u('TextNode', 'dash')]),
+          u('PunctuationNode', ':'),
+          u('WhiteSpaceNode', ' '),
+          u('SourceNode', pos(null, null, null, null, null, null), '@foo-bar'),
+          u('WhiteSpaceNode', ' '),
+          u('SymbolNode', '&'),
+          u('WhiteSpaceNode', ' '),
+
+          u('WordNode', [u('TextNode', 'multiple')]),
+          u('WhiteSpaceNode', ' '),
+          u('WordNode', [u('TextNode', 'dashes')]),
+          u('PunctuationNode', ':'),
+          u('WhiteSpaceNode', ' '),
+          u('SourceNode', pos(null, null, null, null, null, null), '@alpha-bravo/charlie-delta'),
+          u('PunctuationNode', '.')
+        ])
+      ])
+    ]),
+    'should work with dashes'
+  );
+
   t.end();
 });
 
