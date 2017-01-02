@@ -18,13 +18,13 @@ function mentions() {
         return;
       }
 
-      if (!name.test(toString(siblings[++offset]))) {
+      if (!name.test(valueOf(siblings[++offset]))) {
         return;
       }
 
       if (
-        toString(siblings[offset + 1]) === '/' &&
-        name.test(toString(siblings[offset + 2]))
+        valueOf(siblings[offset + 1]) === '/' &&
+        name.test(valueOf(siblings[offset + 2]))
       ) {
         offset += 2;
       }
@@ -39,4 +39,8 @@ function mentions() {
       });
     });
   };
+}
+
+function valueOf(node) {
+  return node ? toString(node) : '';
 }

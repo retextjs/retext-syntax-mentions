@@ -92,6 +92,54 @@ test('mentions()', function (t) {
     'should work with dashes'
   );
 
+  t.deepEqual(
+    processor.run(processor.parse('Final @', {position: false})),
+    u('RootNode', [
+      u('ParagraphNode', [
+        u('SentenceNode', [
+          u('WordNode', [u('TextNode', 'Final')]),
+          u('WhiteSpaceNode', ' '),
+          u('SymbolNode', '@')
+        ])
+      ])
+    ]),
+    'should work with a final `@`'
+  );
+
+  t.deepEqual(
+    processor.run(processor.parse('Not misspelt: @wooorm', {position: false})),
+    u('RootNode', [
+      u('ParagraphNode', [
+        u('SentenceNode', [
+          u('WordNode', [u('TextNode', 'Not')]),
+          u('WhiteSpaceNode', ' '),
+          u('WordNode', [u('TextNode', 'misspelt')]),
+          u('PunctuationNode', ':'),
+          u('WhiteSpaceNode', ' '),
+          u('SourceNode', pos(null, null, null, null, null, null), '@wooorm')
+        ])
+      ])
+    ]),
+    'should work as last item in sentence'
+  );
+
+  t.deepEqual(
+    processor.run(processor.parse('Misspelt? @wooorm', {position: false})),
+    u('RootNode', [
+      u('ParagraphNode', [
+        u('SentenceNode', [
+          u('WordNode', [u('TextNode', 'Misspelt')]),
+          u('PunctuationNode', '?')
+        ]),
+        u('WhiteSpaceNode', ' '),
+        u('SentenceNode', [
+          u('SourceNode', pos(null, null, null, null, null, null), '@wooorm')
+        ])
+      ])
+    ]),
+    'should work as only item in sentence'
+  );
+
   t.end();
 });
 
