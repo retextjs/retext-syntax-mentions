@@ -35,7 +35,7 @@ retext().use(english).use(spell, dictionary).process([
 Yields:
 
 ```text
-  1:12-1:18  warning  wooorm is misspelled        spelling
+  1:12-1:18  warning  `wooorm` is misspelt; did you mean `worm`?  retext-spell  retext-spell
 
 ⚠ 1 warning
 ```
