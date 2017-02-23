@@ -3,13 +3,22 @@
 var test = require('tape');
 var retext = require('retext');
 var u = require('unist-builder');
+var clean = require('unist-util-remove-position');
 var mentions = require('./');
 
-var processor = retext().use(mentions);
+var position = retext().use(mentions);
+var noPosition = retext().use(mentions).use(strip);
+
+function strip() {
+  return transformer;
+  function transformer(tree) {
+    clean(tree, true);
+  }
+}
 
 test('mentions()', function (t) {
   t.deepEqual(
-    processor.run(processor.parse('This @wooorm and @foo/bar.')),
+    position.runSync(position.parse('This @wooorm and @foo/bar.')),
     u('RootNode', pos(1, 1, 0, 1, 27, 26), [
       u('ParagraphNode', pos(1, 1, 0, 1, 27, 26), [
         u('SentenceNode', pos(1, 1, 0, 1, 27, 26), [
@@ -32,7 +41,7 @@ test('mentions()', function (t) {
   );
 
   t.deepEqual(
-    processor.run(processor.parse('One letter: @t & too long: @0123456789012345678901234567890123456789, @perfect.', {position: false})),
+    noPosition.runSync(noPosition.parse('One letter: @t & too long: @0123456789012345678901234567890123456789, @perfect.')),
     u('RootNode', [
       u('ParagraphNode', [
         u('SentenceNode', [
@@ -41,7 +50,7 @@ test('mentions()', function (t) {
           u('WordNode', [u('TextNode', 'letter')]),
           u('PunctuationNode', ':'),
           u('WhiteSpaceNode', ' '),
-          u('SourceNode', pos(null, null, null, null, null, null), '@t'),
+          u('SourceNode', '@t'),
           u('WhiteSpaceNode', ' '),
           u('SymbolNode', '&'),
           u('WhiteSpaceNode', ' '),
@@ -56,7 +65,7 @@ test('mentions()', function (t) {
           u('PunctuationNode', ','),
           u('WhiteSpaceNode', ' '),
 
-          u('SourceNode', pos(null, null, null, null, null, null), '@perfect'),
+          u('SourceNode', '@perfect'),
           u('PunctuationNode', '.')
         ])
       ])
@@ -65,7 +74,7 @@ test('mentions()', function (t) {
   );
 
   t.deepEqual(
-    processor.run(processor.parse('One dash: @foo-bar & multiple dashes: @alpha-bravo/charlie-delta.', {position: false})),
+    noPosition.runSync(noPosition.parse('One dash: @foo-bar & multiple dashes: @alpha-bravo/charlie-delta.')),
     u('RootNode', [
       u('ParagraphNode', [
         u('SentenceNode', [
@@ -74,7 +83,7 @@ test('mentions()', function (t) {
           u('WordNode', [u('TextNode', 'dash')]),
           u('PunctuationNode', ':'),
           u('WhiteSpaceNode', ' '),
-          u('SourceNode', pos(null, null, null, null, null, null), '@foo-bar'),
+          u('SourceNode', '@foo-bar'),
           u('WhiteSpaceNode', ' '),
           u('SymbolNode', '&'),
           u('WhiteSpaceNode', ' '),
@@ -84,7 +93,7 @@ test('mentions()', function (t) {
           u('WordNode', [u('TextNode', 'dashes')]),
           u('PunctuationNode', ':'),
           u('WhiteSpaceNode', ' '),
-          u('SourceNode', pos(null, null, null, null, null, null), '@alpha-bravo/charlie-delta'),
+          u('SourceNode', '@alpha-bravo/charlie-delta'),
           u('PunctuationNode', '.')
         ])
       ])
@@ -93,7 +102,7 @@ test('mentions()', function (t) {
   );
 
   t.deepEqual(
-    processor.run(processor.parse('Final @', {position: false})),
+    noPosition.runSync(noPosition.parse('Final @')),
     u('RootNode', [
       u('ParagraphNode', [
         u('SentenceNode', [
@@ -107,7 +116,7 @@ test('mentions()', function (t) {
   );
 
   t.deepEqual(
-    processor.run(processor.parse('Not misspelt: @wooorm', {position: false})),
+    noPosition.runSync(noPosition.parse('Not misspelt: @wooorm')),
     u('RootNode', [
       u('ParagraphNode', [
         u('SentenceNode', [
@@ -116,7 +125,7 @@ test('mentions()', function (t) {
           u('WordNode', [u('TextNode', 'misspelt')]),
           u('PunctuationNode', ':'),
           u('WhiteSpaceNode', ' '),
-          u('SourceNode', pos(null, null, null, null, null, null), '@wooorm')
+          u('SourceNode', '@wooorm')
         ])
       ])
     ]),
@@ -124,7 +133,7 @@ test('mentions()', function (t) {
   );
 
   t.deepEqual(
-    processor.run(processor.parse('Misspelt? @wooorm', {position: false})),
+    noPosition.runSync(noPosition.parse('Misspelt? @wooorm')),
     u('RootNode', [
       u('ParagraphNode', [
         u('SentenceNode', [
@@ -133,7 +142,7 @@ test('mentions()', function (t) {
         ]),
         u('WhiteSpaceNode', ' '),
         u('SentenceNode', [
-          u('SourceNode', pos(null, null, null, null, null, null), '@wooorm')
+          u('SourceNode', '@wooorm')
         ])
       ])
     ]),
