@@ -9,36 +9,40 @@ module.exports = mentions;
 var name = /^(?:[a-z0-9]{1,2}|[a-z0-9][a-z0-9-]{1,37}[a-z0-9])$/;
 
 function mentions() {
-  return function (tree) {
-    visit(tree, 'SymbolNode', function (node, index, parent) {
-      var siblings = parent.children;
-      var offset = index;
+  return transformer;
+}
 
-      if (toString(node) !== '@') {
-        return;
-      }
+function transformer(tree) {
+  visit(tree, 'SymbolNode', visitor);
+}
 
-      if (!name.test(valueOf(siblings[++offset]))) {
-        return;
-      }
+function visitor(node, index, parent) {
+  var siblings = parent.children;
+  var offset = index;
 
-      if (
-        valueOf(siblings[offset + 1]) === '/' &&
-        name.test(valueOf(siblings[offset + 2]))
-      ) {
-        offset += 2;
-      }
+  if (toString(node) !== '@') {
+    return;
+  }
 
-      siblings.splice(index, offset - index + 1, {
-        type: 'SourceNode',
-        value: toString(siblings.slice(index, offset + 1)),
-        position: {
-          start: position.start(node),
-          end: position.end(siblings[offset])
-        }
-      });
-    });
-  };
+  if (!name.test(valueOf(siblings[++offset]))) {
+    return;
+  }
+
+  if (
+    valueOf(siblings[offset + 1]) === '/' &&
+    name.test(valueOf(siblings[offset + 2]))
+  ) {
+    offset += 2;
+  }
+
+  siblings.splice(index, offset - index + 1, {
+    type: 'SourceNode',
+    value: toString(siblings.slice(index, offset + 1)),
+    position: {
+      start: position.start(node),
+      end: position.end(siblings[offset])
+    }
+  });
 }
 
 function valueOf(node) {
