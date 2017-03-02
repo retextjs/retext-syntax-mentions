@@ -58,6 +58,40 @@ test('mentions()', function (t) {
   );
 
   t.deepEqual(
+    noPosition.runSync(noPosition.parse('This @wooorm’s that.')),
+    u('RootNode', [
+      u('ParagraphNode', [
+        u('SentenceNode', [
+          u('WordNode', [u('TextNode', 'This')]),
+          u('WhiteSpaceNode', ' '),
+          u('SourceNode', '@wooorm’s'),
+          u('WhiteSpaceNode', ' '),
+          u('WordNode', [u('TextNode', 'that')]),
+          u('PunctuationNode', '.')
+        ])
+      ])
+    ]),
+    'should support possessive apos+s (`’s`)'
+  );
+
+  t.deepEqual(
+    noPosition.runSync(noPosition.parse('This @wooorm\'s that.')),
+    u('RootNode', [
+      u('ParagraphNode', [
+        u('SentenceNode', [
+          u('WordNode', [u('TextNode', 'This')]),
+          u('WhiteSpaceNode', ' '),
+          u('SourceNode', '@wooorm\'s'),
+          u('WhiteSpaceNode', ' '),
+          u('WordNode', [u('TextNode', 'that')]),
+          u('PunctuationNode', '.')
+        ])
+      ])
+    ]),
+    'should support possessive quote+s (`\'s`)'
+  );
+
+  t.deepEqual(
     noPosition.runSync(noPosition.parse('One letter: @t & too long: @0123456789012345678901234567890123456789, @perfect.')),
     u('RootNode', [
       u('ParagraphNode', [
