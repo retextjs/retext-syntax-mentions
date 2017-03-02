@@ -41,6 +41,23 @@ test('mentions()', function (t) {
   );
 
   t.deepEqual(
+    noPosition.runSync(noPosition.parse('This @MikeMcQuaid that.')),
+    u('RootNode', [
+      u('ParagraphNode', [
+        u('SentenceNode', [
+          u('WordNode', [u('TextNode', 'This')]),
+          u('WhiteSpaceNode', ' '),
+          u('SourceNode', '@MikeMcQuaid'),
+          u('WhiteSpaceNode', ' '),
+          u('WordNode', [u('TextNode', 'that')]),
+          u('PunctuationNode', '.')
+        ])
+      ])
+    ]),
+    'should be case-insensitive'
+  );
+
+  t.deepEqual(
     noPosition.runSync(noPosition.parse('One letter: @t & too long: @0123456789012345678901234567890123456789, @perfect.')),
     u('RootNode', [
       u('ParagraphNode', [

@@ -6,7 +6,7 @@ var toString = require('nlcst-to-string');
 
 module.exports = mentions;
 
-var name = /^(?:[a-z0-9]{1,2}|[a-z0-9][a-z0-9-]{1,37}[a-z0-9])$/;
+var name = /^(?:[a-z0-9]{1,2}|[a-z0-9][a-z0-9-]{1,37}[a-z0-9])$/i;
 
 function mentions() {
   return transformer;
