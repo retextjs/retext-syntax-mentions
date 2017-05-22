@@ -5,7 +5,7 @@ Classify [**@mentions**](https://github.com/blog/821) as
 
 ## Installation
 
-[npm][npm-install]:
+[npm][]:
 
 ```bash
 npm install retext-syntax-mentions
@@ -60,8 +60,8 @@ no issues found
 
 Classify [**@mentions**](https://github.com/blog/821) as
 [SourceNode][source]s, which represent “external (ungrammatical) values”
-instead of natural language.  This hides mentions from [retext-spell][],
-[retext-readability][], [retext-equality][], and more.
+instead of natural language.  This hides mentions from [`retext-spell`][spell],
+[`retext-readability`][readability], [`retext-equality`][equality], and more.
 
 ## License
 
@@ -77,7 +77,7 @@ instead of natural language.  This hides mentions from [retext-spell][],
 
 [codecov]: https://codecov.io/github/wooorm/retext-syntax-mentions
 
-[npm-install]: https://docs.npmjs.com/cli/install
+[npm]: https://docs.npmjs.com/cli/install
 
 [license]: LICENSE
 
@@ -87,8 +87,8 @@ instead of natural language.  This hides mentions from [retext-spell][],
 
 [source]: https://github.com/wooorm/nlcst#source
 
-[retext-spell]: https://github.com/wooorm/retext-spell
+[spell]: https://github.com/wooorm/retext-spell
 
-[retext-readability]: https://github.com/wooorm/retext-readability
+[readability]: https://github.com/wooorm/retext-readability
 
-[retext-equality]: https://github.com/wooorm/retext-equality
+[equality]: https://github.com/wooorm/retext-equality
