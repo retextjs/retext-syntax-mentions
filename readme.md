@@ -64,6 +64,17 @@ Classify [**@mentions**](https://github.com/blog/821) as
 instead of natural language.  This hides mentions from [`retext-spell`][spell],
 [`retext-readability`][readability], [`retext-equality`][equality], and more.
 
+## Related
+
+*   [`retext-syntax-urls`][syntax-urls]
+    — Classify URLs and filepaths as syntax
+*   [`retext-spell`][spell]
+    — Check spelling
+*   [`retext-readability`][readability]
+    — Check readability
+*   [`retext-equality`][equality]
+    — Check possible insensitive, inconsiderate language
+
 ## License
 
 [MIT][license] © [Titus Wormer][author]
@@ -93,3 +104,5 @@ instead of natural language.  This hides mentions from [`retext-spell`][spell],
 [readability]: https://github.com/wooorm/retext-readability
 
 [equality]: https://github.com/wooorm/retext-equality
+
+[syntax-urls]: https://github.com/wooorm/retext-syntax-urls
