@@ -9,6 +9,12 @@
     "mentions",
     "retext"
   ],
+  "repository": "retextjs/retext-syntax-mentions",
+  "bugs": "https://github.com/retextjs/retext-syntax-mentions/issues",
+  "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
+  ],
   "files": [
     "index.js"
   ],
@@ -17,12 +23,6 @@
     "unist-util-position": "^3.0.0",
     "unist-util-visit": "^1.1.0"
   },
-  "repository": "https://github.com/wooorm/retext-syntax-mentions",
-  "bugs": "https://github.com/wooorm/retext-syntax-mentions/issues",
-  "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
-  "contributors": [
-    "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
-  ],
   "devDependencies": {
     "browserify": "^14.1.0",
     "esmangle": "^1.0.1",

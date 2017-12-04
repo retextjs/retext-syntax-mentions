@@ -81,13 +81,13 @@ instead of natural language.  This hides mentions from [`retext-spell`][spell],
 
 <!-- Definitions -->
 
-[travis-badge]: https://img.shields.io/travis/wooorm/retext-syntax-mentions.svg
+[travis-badge]: https://img.shields.io/travis/retextjs/retext-syntax-mentions.svg
 
-[travis]: https://travis-ci.org/wooorm/retext-syntax-mentions
+[travis]: https://travis-ci.org/retextjs/retext-syntax-mentions
 
-[codecov-badge]: https://img.shields.io/codecov/c/github/wooorm/retext-syntax-mentions.svg
+[codecov-badge]: https://img.shields.io/codecov/c/github/retextjs/retext-syntax-mentions.svg
 
-[codecov]: https://codecov.io/github/wooorm/retext-syntax-mentions
+[codecov]: https://codecov.io/github/retextjs/retext-syntax-mentions
 
 [npm]: https://docs.npmjs.com/cli/install
 
@@ -95,14 +95,14 @@ instead of natural language.  This hides mentions from [`retext-spell`][spell],
 
 [author]: http://wooorm.com
 
-[retext]: https://github.com/wooorm/retext
+[retext]: https://github.com/retextjs/retext
 
-[source]: https://github.com/wooorm/nlcst#source
+[source]: https://github.com/syntax-tree/nlcst#source
 
-[spell]: https://github.com/wooorm/retext-spell
+[spell]: https://github.com/retextjs/retext-spell
 
-[readability]: https://github.com/wooorm/retext-readability
+[readability]: https://github.com/retextjs/retext-readability
 
-[equality]: https://github.com/wooorm/retext-equality
+[equality]: https://github.com/retextjs/retext-equality
 
-[syntax-urls]: https://github.com/wooorm/retext-syntax-urls
+[syntax-urls]: https://github.com/retextjs/retext-syntax-urls
