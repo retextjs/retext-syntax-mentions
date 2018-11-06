@@ -4,7 +4,7 @@ var test = require('tape');
 var retext = require('retext');
 var u = require('unist-builder');
 var clean = require('unist-util-remove-position');
-var mentions = require('./');
+var mentions = require('.');
 
 var position = retext().use(mentions);
 var noPosition = retext().use(mentions).use(strip);
