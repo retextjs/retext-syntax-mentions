@@ -4,21 +4,12 @@ node_js:
 - '9.0'
 after_success: bash <(curl -s https://codecov.io/bash)
 deploy:
-  - provider: npm
-    skip_cleanup: true
-    email: tituswormer@gmail.com
-    api_key:
-      secure: Kldlh/7uFy/bofm703cUNsOhYzl+aMF+Aj3zM2oP3xHhrObH7BxfcOSGmwsiQpPd1j8HEbW4pBC/+25kCvtLk8Hfl9Ot7XkW3sA1+1XmMjhcrWpUEtRtuyObmrA1nRFFjwlccoEM5GJku4QMuk4dVTjib0S7cYJP2MyvfodV/SRK1uqe9pL9LNqbScSiiAOYVyi1R5ixGZERmAt/uuwI1e5wiroPTOdixpHGVqAM3Jo9VhMGxg6V9H6P+HOiX7HsBMnZfOw2UGfhgIaLV6iSDEYY5b5jmg90Qyg7kotVIQtL0jnPd7tFK/G5MGSQBfZRHdxkcbmJPjmor9//b944RXj1wOw+fd9esjMMaEyVHI6g0j9Qe723+uDWHJ9sXRwyajzpyet8yfD+D0/QBSZE5HDquCDXWj51MHm6nWjQHtyQhnN9rj5TdDuIPTDedVtaZQo/jQGsz+TDC5XSPC7MRhpiOfC5c4yN3f6l0pwIAlq6nKi1y8IfTzI7f2eouklNPm4HFRLy0L1cmBgzIDEX4F+w2gZG3nAqBloXJGbmNsgdZv+W3NMT6ugSDwAm5YZ0sVHaj7VQK0I4r+x4cBmwQ+Q9Au2s1dU/4qQqEyzFdQ1TqO7Z/J8ez8j7NQfgT+uM9SQnEzOJk/G5Ga/0U3MYMGv3BW4VT9m5oVIIzgMH5+o=
-    on:
-      tags: true
-      node: '9.0'
-  - provider: releases
-    skip_cleanup: true
-    api_key:
-      secure: EhpqdrqmZL3VU1Wh+Z4kX4PF64TyCzani9KWd6xFCpJg7ontKc1asWnkf/Lhw67bz0sjjrp8+OuiFrtk/UTaO9knttrmkajUUg1+Nhfm7ICDAe+qgA7d0p6fZu6C2W37GirCJqN/HbBslz/YOM9g11zyziPzasJ585gSzLbejcLVj80ET9QXis20FAm+H/IKv0rcnFX/VVM9zX3fW0VeOyU6x6u6mAP8pXQ5tJdNUZE/3fMMJrP5y4LGLvTBH/ogo15VttPRnkJeOgJQyFO7canXB7c5ZPpdrS+w/0buu8XqHssa+C8Zb/aER7pFcRfeIa124lGjKq0f8Bp/ID+qgSsrh5ckfg+croXSzi4G8PmLlLLIgqqr2N7sHKPUUeg7tEpEw2neBUF9vniaDjOkMVEtsE8Z3K89FDOSJx6mRyOduIql8WQvMoCsi4DJZ7EjExRkGCEbLqbWo360uPP3rmoVDwOnF6Sr5qTfTKp5R8KZUxwnoA8lxQ1NQrcm0gce9w+uFGFDz97Ol2fAdxHRcAUZHgA/ZWuS1+YDW0Tv7cBsgYjg94jWkBDD5pqo685fuiSxeoGX/MvPAqqLOovyHX7GiKD9MndOuHghWc9qaeOF+g13hL3SpGuhzgDrOZlE4a7uT6+RwDElT1xK4MdgRlQ+EV+WqAjrWxJ4KmURhHo=
-    file:
-      - "retext-syntax-mentions.js"
-      - "retext-syntax-mentions.min.js"
-    on:
-      tags: true
-      node: '9.0'
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: EhpqdrqmZL3VU1Wh+Z4kX4PF64TyCzani9KWd6xFCpJg7ontKc1asWnkf/Lhw67bz0sjjrp8+OuiFrtk/UTaO9knttrmkajUUg1+Nhfm7ICDAe+qgA7d0p6fZu6C2W37GirCJqN/HbBslz/YOM9g11zyziPzasJ585gSzLbejcLVj80ET9QXis20FAm+H/IKv0rcnFX/VVM9zX3fW0VeOyU6x6u6mAP8pXQ5tJdNUZE/3fMMJrP5y4LGLvTBH/ogo15VttPRnkJeOgJQyFO7canXB7c5ZPpdrS+w/0buu8XqHssa+C8Zb/aER7pFcRfeIa124lGjKq0f8Bp/ID+qgSsrh5ckfg+croXSzi4G8PmLlLLIgqqr2N7sHKPUUeg7tEpEw2neBUF9vniaDjOkMVEtsE8Z3K89FDOSJx6mRyOduIql8WQvMoCsi4DJZ7EjExRkGCEbLqbWo360uPP3rmoVDwOnF6Sr5qTfTKp5R8KZUxwnoA8lxQ1NQrcm0gce9w+uFGFDz97Ol2fAdxHRcAUZHgA/ZWuS1+YDW0Tv7cBsgYjg94jWkBDD5pqo685fuiSxeoGX/MvPAqqLOovyHX7GiKD9MndOuHghWc9qaeOF+g13hL3SpGuhzgDrOZlE4a7uT6+RwDElT1xK4MdgRlQ+EV+WqAjrWxJ4KmURhHo=
+  file:
+    - "retext-syntax-mentions.js"
+    - "retext-syntax-mentions.min.js"
+  on:
+    tags: true
