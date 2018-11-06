@@ -1,38 +1,38 @@
-'use strict';
+'use strict'
 
-var visit = require('unist-util-visit');
-var position = require('unist-util-position');
-var toString = require('nlcst-to-string');
+var visit = require('unist-util-visit')
+var position = require('unist-util-position')
+var toString = require('nlcst-to-string')
 
-module.exports = mentions;
+module.exports = mentions
 
-var name = /^(?:[a-z0-9]{1,2}|[a-z0-9][a-z0-9-]{1,37}[a-z0-9])(['’]s)?$/i;
+var name = /^(?:[a-z0-9]{1,2}|[a-z0-9][a-z0-9-]{1,37}[a-z0-9])(['’]s)?$/i
 
 function mentions() {
-  return transformer;
+  return transform
 }
 
-function transformer(tree) {
-  visit(tree, 'SymbolNode', visitor);
+function transform(tree) {
+  visit(tree, 'SymbolNode', visitor)
 }
 
 function visitor(node, index, parent) {
-  var siblings = parent.children;
-  var offset = index;
+  var siblings = parent.children
+  var offset = index
 
   if (toString(node) !== '@') {
-    return;
+    return
   }
 
   if (!name.test(valueOf(siblings[++offset]))) {
-    return;
+    return
   }
 
   if (
     valueOf(siblings[offset + 1]) === '/' &&
     name.test(valueOf(siblings[offset + 2]))
   ) {
-    offset += 2;
+    offset += 2
   }
 
   siblings.splice(index, offset - index + 1, {
@@ -42,9 +42,9 @@ function visitor(node, index, parent) {
       start: position.start(node),
       end: position.end(siblings[offset])
     }
-  });
+  })
 }
 
 function valueOf(node) {
-  return node ? toString(node) : '';
+  return node ? toString(node) : ''
 }

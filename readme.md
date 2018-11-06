@@ -16,21 +16,21 @@ npm install retext-syntax-mentions
 Without `syntax-mentions`:
 
 ```javascript
-var dictionary = require('dictionary-en-gb');
-var unified = require('unified');
-var english = require('retext-english');
-var stringify = require('retext-stringify');
-var spell = require('retext-spell');
-var mentions = require('retext-syntax-mentions');
-var report = require('vfile-reporter');
+var dictionary = require('dictionary-en-gb')
+var unified = require('unified')
+var english = require('retext-english')
+var stringify = require('retext-stringify')
+var spell = require('retext-spell')
+var mentions = require('retext-syntax-mentions')
+var report = require('vfile-reporter')
 
 unified()
   .use(english)
   .use(spell, dictionary)
   .use(stringify)
-  .process('Misspelt? @wooorm.', function (err, file) {
-    console.log(report(err || file));
-  });
+  .process('Misspelt? @wooorm.', function(err, file) {
+    console.log(report(err || file))
+  })
 ```
 
 Yields:

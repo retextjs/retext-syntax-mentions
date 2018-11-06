@@ -1,22 +1,24 @@
-'use strict';
+'use strict'
 
-var test = require('tape');
-var retext = require('retext');
-var u = require('unist-builder');
-var clean = require('unist-util-remove-position');
-var mentions = require('.');
+var test = require('tape')
+var retext = require('retext')
+var u = require('unist-builder')
+var clean = require('unist-util-remove-position')
+var mentions = require('.')
 
-var position = retext().use(mentions);
-var noPosition = retext().use(mentions).use(strip);
+var position = retext().use(mentions)
+var noPosition = retext()
+  .use(mentions)
+  .use(strip)
 
 function strip() {
-  return transformer;
+  return transformer
   function transformer(tree) {
-    clean(tree, true);
+    clean(tree, true)
   }
 }
 
-test('mentions()', function (t) {
+test('mentions()', function(t) {
   t.deepEqual(
     position.runSync(position.parse('This @wooorm and @foo/bar.')),
     u('RootNode', pos(1, 1, 0, 1, 27, 26), [
@@ -38,7 +40,7 @@ test('mentions()', function (t) {
       ])
     ]),
     'should work'
-  );
+  )
 
   t.deepEqual(
     noPosition.runSync(noPosition.parse('This @MikeMcQuaid that.')),
@@ -55,7 +57,7 @@ test('mentions()', function (t) {
       ])
     ]),
     'should be case-insensitive'
-  );
+  )
 
   t.deepEqual(
     noPosition.runSync(noPosition.parse('This @wooorm’s that.')),
@@ -72,27 +74,31 @@ test('mentions()', function (t) {
       ])
     ]),
     'should support possessive apos+s (`’s`)'
-  );
+  )
 
   t.deepEqual(
-    noPosition.runSync(noPosition.parse('This @wooorm\'s that.')),
+    noPosition.runSync(noPosition.parse("This @wooorm's that.")),
     u('RootNode', [
       u('ParagraphNode', [
         u('SentenceNode', [
           u('WordNode', [u('TextNode', 'This')]),
           u('WhiteSpaceNode', ' '),
-          u('SourceNode', '@wooorm\'s'),
+          u('SourceNode', "@wooorm's"),
           u('WhiteSpaceNode', ' '),
           u('WordNode', [u('TextNode', 'that')]),
           u('PunctuationNode', '.')
         ])
       ])
     ]),
-    'should support possessive quote+s (`\'s`)'
-  );
+    "should support possessive quote+s (`'s`)"
+  )
 
   t.deepEqual(
-    noPosition.runSync(noPosition.parse('One letter: @t & too long: @0123456789012345678901234567890123456789, @perfect.')),
+    noPosition.runSync(
+      noPosition.parse(
+        'One letter: @t & too long: @0123456789012345678901234567890123456789, @perfect.'
+      )
+    ),
     u('RootNode', [
       u('ParagraphNode', [
         u('SentenceNode', [
@@ -112,7 +118,9 @@ test('mentions()', function (t) {
           u('PunctuationNode', ':'),
           u('WhiteSpaceNode', ' '),
           u('SymbolNode', '@'),
-          u('WordNode', [u('TextNode', '0123456789012345678901234567890123456789')]),
+          u('WordNode', [
+            u('TextNode', '0123456789012345678901234567890123456789')
+          ]),
           u('PunctuationNode', ','),
           u('WhiteSpaceNode', ' '),
 
@@ -122,10 +130,14 @@ test('mentions()', function (t) {
       ])
     ]),
     'should work without position'
-  );
+  )
 
   t.deepEqual(
-    noPosition.runSync(noPosition.parse('One dash: @foo-bar & multiple dashes: @alpha-bravo/charlie-delta.')),
+    noPosition.runSync(
+      noPosition.parse(
+        'One dash: @foo-bar & multiple dashes: @alpha-bravo/charlie-delta.'
+      )
+    ),
     u('RootNode', [
       u('ParagraphNode', [
         u('SentenceNode', [
@@ -150,7 +162,7 @@ test('mentions()', function (t) {
       ])
     ]),
     'should work with dashes'
-  );
+  )
 
   t.deepEqual(
     noPosition.runSync(noPosition.parse('Final @')),
@@ -164,7 +176,7 @@ test('mentions()', function (t) {
       ])
     ]),
     'should work with a final `@`'
-  );
+  )
 
   t.deepEqual(
     noPosition.runSync(noPosition.parse('Not misspelt: @wooorm')),
@@ -181,7 +193,7 @@ test('mentions()', function (t) {
       ])
     ]),
     'should work as last item in sentence'
-  );
+  )
 
   t.deepEqual(
     noPosition.runSync(noPosition.parse('Misspelt? @wooorm')),
@@ -192,16 +204,14 @@ test('mentions()', function (t) {
           u('PunctuationNode', '?')
         ]),
         u('WhiteSpaceNode', ' '),
-        u('SentenceNode', [
-          u('SourceNode', '@wooorm')
-        ])
+        u('SentenceNode', [u('SourceNode', '@wooorm')])
       ])
     ]),
     'should work as only item in sentence'
-  );
+  )
 
-  t.end();
-});
+  t.end()
+})
 
 /* eslint-disable max-params */
 function pos(l1, c1, o1, l2, c2, o2) {
@@ -210,5 +220,5 @@ function pos(l1, c1, o1, l2, c2, o2) {
       start: {line: l1, column: c1, offset: o1},
       end: {line: l2, column: c2, offset: o2}
     }
-  };
+  }
 }
