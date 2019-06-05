@@ -213,7 +213,7 @@ test('mentions()', function(t) {
   t.end()
 })
 
-/* eslint-disable max-params */
+// eslint-disable-next-line max-params
 function pos(l1, c1, o1, l2, c2, o2) {
   return {
     position: {
