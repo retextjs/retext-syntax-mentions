@@ -1,21 +1,30 @@
-# retext-syntax-mentions [![Build][build-badge]][build] [![Coverage][coverage-badge]][coverage] [![Downloads][downloads-badge]][downloads] [![Chat][chat-badge]][chat]
+# retext-syntax-mentions
 
-Classify [**@mentions**](https://github.com/blog/821) as
-[syntax][source], not natural language, in [**retext**][retext].
+[![Build][build-badge]][build]
+[![Coverage][coverage-badge]][coverage]
+[![Downloads][downloads-badge]][downloads]
+[![Size][size-badge]][size]
+[![Sponsors][sponsors-badge]][collective]
+[![Backers][backers-badge]][collective]
+[![Chat][chat-badge]][chat]
 
-## Installation
+[**retext**][retext] plugin to classify
+[**@mentions**](https://github.com/blog/821) as [syntax][source], not natural
+language.
+
+## Install
 
 [npm][]:
 
-```bash
+```sh
 npm install retext-syntax-mentions
 ```
 
-## Usage
+## Use
 
 Without `syntax-mentions`:
 
-```javascript
+```js
 var dictionary = require('dictionary-en-gb')
 var unified = require('unified')
 var english = require('retext-english')
@@ -35,7 +44,7 @@ unified()
 
 Yields:
 
-```text
+```txt
   1:12-1:18  warning  `wooorm` is misspelt; did you mean `worm`?  retext-spell  retext-spell
 
 ⚠ 1 warning
@@ -51,7 +60,7 @@ With `syntax-mentions`:
 
 Yields:
 
-```text
+```txt
 no issues found
 ```
 
@@ -59,9 +68,9 @@ no issues found
 
 ### `retext().use(mentions)`
 
-Classify [**@mentions**](https://github.com/blog/821) as
-[SourceNode][source]s, which represent “external (ungrammatical) values”
-instead of natural language.  This hides mentions from [`retext-spell`][spell],
+Classify [**@mentions**](https://github.com/blog/821) as [**source**][source],
+which represent “external (ungrammatical) values” instead of natural language.
+This hides mentions from [`retext-spell`][spell],
 [`retext-readability`][readability], [`retext-equality`][equality], and more.
 
 ## Related
@@ -77,11 +86,13 @@ instead of natural language.  This hides mentions from [`retext-spell`][spell],
 
 ## Contribute
 
-See [`contributing.md` in `retextjs/retext`][contributing] for ways to get
-started.
+See [`contributing.md`][contributing] in [`retextjs/.github`][health] for ways
+to get started.
+See [`support.md`][support] for ways to get help.
 
-This organisation has a [Code of Conduct][coc].  By interacting with this
-repository, organisation, or community you agree to abide by its terms.
+This project has a [Code of Conduct][coc].
+By interacting with this repository, organisation, or community you agree to
+abide by its terms.
 
 ## License
 
@@ -101,11 +112,29 @@ repository, organisation, or community you agree to abide by its terms.
 
 [downloads]: https://www.npmjs.com/package/retext-syntax-mentions
 
+[size-badge]: https://img.shields.io/bundlephobia/minzip/retext-syntax-mentions.svg
+
+[size]: https://bundlephobia.com/result?p=retext-syntax-mentions
+
+[sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
+
+[backers-badge]: https://opencollective.com/unified/backers/badge.svg
+
+[collective]: https://opencollective.com/unified
+
 [chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
 
 [chat]: https://spectrum.chat/unified/retext
 
 [npm]: https://docs.npmjs.com/cli/install
+
+[health]: https://github.com/retextjs/.github
+
+[contributing]: https://github.com/retextjs/.github/blob/master/contributing.md
+
+[support]: https://github.com/retextjs/.github/blob/master/support.md
+
+[coc]: https://github.com/retextjs/.github/blob/master/code-of-conduct.md
 
 [license]: license
 
@@ -122,7 +151,3 @@ repository, organisation, or community you agree to abide by its terms.
 [equality]: https://github.com/retextjs/retext-equality
 
 [syntax-urls]: https://github.com/retextjs/retext-syntax-urls
-
-[contributing]: https://github.com/retextjs/retext/blob/master/contributing.md
-
-[coc]: https://github.com/retextjs/retext/blob/master/code-of-conduct.md
