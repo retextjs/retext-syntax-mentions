@@ -1,15 +1,20 @@
 {
   "name": "retext-syntax-mentions",
   "version": "1.1.6",
-  "description": "retext plugin to classify @mentions as syntax",
+  "description": "retext plugin to classify @mentions as syntax, not natural language",
   "license": "MIT",
   "keywords": [
     "unified",
     "retext",
+    "retext-plugin",
     "plugin",
     "syntax",
     "source",
-    "mentions"
+    "mention",
+    "mentions",
+    "github",
+    "twitter",
+    "social"
   ],
   "repository": "retextjs/retext-syntax-mentions",
   "bugs": "https://github.com/retextjs/retext-syntax-mentions/issues",
