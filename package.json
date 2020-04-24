@@ -1,6 +1,6 @@
 {
   "name": "retext-syntax-mentions",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "retext plugin to classify @mentions as syntax, not natural language",
   "license": "MIT",
   "keywords": [
