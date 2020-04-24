@@ -7,9 +7,7 @@ var clean = require('unist-util-remove-position')
 var mentions = require('.')
 
 var position = retext().use(mentions)
-var noPosition = retext()
-  .use(mentions)
-  .use(strip)
+var noPosition = retext().use(mentions).use(strip)
 
 function strip() {
   return transformer
@@ -18,7 +16,7 @@ function strip() {
   }
 }
 
-test('mentions()', function(t) {
+test('mentions()', function (t) {
   t.deepEqual(
     position.runSync(position.parse('This @wooorm and @foo/bar.')),
     u('RootNode', pos(1, 1, 0, 1, 27, 26), [
