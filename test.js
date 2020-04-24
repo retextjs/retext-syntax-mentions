@@ -208,6 +208,64 @@ test('mentions()', function (t) {
     'should work as only item in sentence'
   )
 
+  t.deepEqual(
+    retext()
+      .use(mentions, {style: 'twitter'})
+      .use(strip)
+      .runSync(
+        noPosition.parse(
+          '@_philippkuehn (my twitter handle) is not recognized.'
+        )
+      ),
+    u('RootNode', [
+      u('ParagraphNode', [
+        u('SentenceNode', [
+          u('SourceNode', '@_philippkuehn'),
+          u('WhiteSpaceNode', ' '),
+          u('PunctuationNode', '('),
+          u('WordNode', [u('TextNode', 'my')]),
+          u('WhiteSpaceNode', ' '),
+          u('WordNode', [u('TextNode', 'twitter')]),
+          u('WhiteSpaceNode', ' '),
+          u('WordNode', [u('TextNode', 'handle')]),
+          u('PunctuationNode', ')'),
+          u('WhiteSpaceNode', ' '),
+          u('WordNode', [u('TextNode', 'is')]),
+          u('WhiteSpaceNode', ' '),
+          u('WordNode', [u('TextNode', 'not')]),
+          u('WhiteSpaceNode', ' '),
+          u('WordNode', [u('TextNode', 'recognized')]),
+          u('PunctuationNode', '.')
+        ])
+      ])
+    ]),
+    'should support twitter handles'
+  )
+
+  t.deepEqual(
+    retext()
+      .use(mentions, {style: /^@[a-z]{1,15}$/i})
+      .use(strip)
+      .runSync(noPosition.parse('@lettersOnly, no @123123 digits.')),
+    u('RootNode', [
+      u('ParagraphNode', [
+        u('SentenceNode', [
+          u('SourceNode', '@lettersOnly'),
+          u('PunctuationNode', ','),
+          u('WhiteSpaceNode', ' '),
+          u('WordNode', [u('TextNode', 'no')]),
+          u('WhiteSpaceNode', ' '),
+          u('SymbolNode', '@'),
+          u('WordNode', [u('TextNode', '123123')]),
+          u('WhiteSpaceNode', ' '),
+          u('WordNode', [u('TextNode', 'digits')]),
+          u('PunctuationNode', '.')
+        ])
+      ])
+    ]),
+    'should support custom handles'
+  )
+
   t.end()
 })
 

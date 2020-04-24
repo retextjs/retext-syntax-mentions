@@ -6,45 +6,69 @@ var toString = require('nlcst-to-string')
 
 module.exports = mentions
 
-var name = /^(?:[a-z\d]{1,2}|[a-z\d][a-z\d-]{1,37}[a-z\d])(['’]s)?$/i
+var genitive = /['’]s?$/i
 
-function mentions() {
+var gh = /^@(?:[a-z\d]{1,2}|[a-z\d][a-z\d-]{1,37}[a-z\d])(\/(?:[a-z\d]{1,2}|[a-z\d][a-z\d-]{1,37}[a-z\d]))?$/i
+var tw = /^@\w{1,15}$/i
+
+function mentions(options) {
+  var style = (options || {}).style || 'github'
+
+  if (style === 'github') {
+    style = gh
+  } else if (style === 'twitter') {
+    style = tw
+  }
+
   return transform
-}
 
-function transform(tree) {
-  visit(tree, 'SymbolNode', visitor)
-}
-
-function visitor(node, index, parent) {
-  var siblings = parent.children
-  var offset = index
-
-  if (toString(node) !== '@') {
-    return
+  function transform(tree) {
+    visit(tree, 'SymbolNode', visitor)
   }
 
-  if (!name.test(valueOf(siblings[++offset]))) {
-    return
-  }
+  function visitor(node, index, parent) {
+    var siblings = parent.children
+    var length = siblings.length
+    var offset = index
+    var slice
 
-  if (
-    valueOf(siblings[offset + 1]) === '/' &&
-    name.test(valueOf(siblings[offset + 2]))
-  ) {
-    offset += 2
-  }
-
-  siblings.splice(index, offset - index + 1, {
-    type: 'SourceNode',
-    value: toString(siblings.slice(index, offset + 1)),
-    position: {
-      start: position.start(node),
-      end: position.end(siblings[offset])
+    if (toString(node) !== '@') {
+      return
     }
-  })
-}
 
-function valueOf(node) {
-  return node ? toString(node) : ''
+    offset++
+
+    while (offset <= length) {
+      if (offset === length) break
+      if (siblings[offset].type === 'WhiteSpaceNode') break
+
+      if (
+        toString(siblings[offset]) !== '/' &&
+        !check(siblings.slice(index, offset + 1))
+      ) {
+        break
+      }
+
+      offset++
+    }
+
+    slice = siblings.slice(index, offset)
+
+    if (!check(slice)) {
+      return
+    }
+
+    siblings.splice(index, offset - index, {
+      type: 'SourceNode',
+      value: toString(slice),
+      position: {
+        start: position.start(node),
+        end: position.end(slice[slice.length - 1])
+      }
+    })
+  }
+
+  function check(nodes) {
+    return style.test(toString(nodes).replace(genitive, ''))
+  }
 }

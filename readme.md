@@ -66,12 +66,18 @@ no issues found
 
 ## API
 
-### `retext().use(mentions)`
+### `retext().use(mentions[, options])`
 
 Classify [**@mentions**](https://github.com/blog/821) as [**source**][source],
 which represent “external (ungrammatical) values” instead of natural language.
 This hides mentions from [`retext-spell`][spell],
 [`retext-readability`][readability], [`retext-equality`][equality], and more.
+
+###### `options.style`
+
+Style can be either `'github'` (for GitHub user and team mentions), `'twitter'`
+(for Twitter handles), or a regular expression (such as `/^@\w{1,15}$/i`, which
+is the Twitter regex).
 
 ## Related
 
