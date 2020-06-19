@@ -17,7 +17,7 @@ function strip() {
 }
 
 test('mentions()', function (t) {
-  t.deepEqual(
+  t.deepLooseEqual(
     position.runSync(position.parse('This @wooorm and @foo/bar.')),
     u('RootNode', pos(1, 1, 0, 1, 27, 26), [
       u('ParagraphNode', pos(1, 1, 0, 1, 27, 26), [
