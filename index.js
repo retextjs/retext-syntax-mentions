@@ -14,10 +14,16 @@ var tw = /^@\w{1,15}$/i
 function mentions(options) {
   var style = (options || {}).style || 'github'
 
-  if (style === 'github') {
-    style = gh
-  } else if (style === 'twitter') {
-    style = tw
+  if (typeof style === 'string') {
+    if (style === 'github') {
+      style = gh
+    } else if (style === 'twitter') {
+      style = tw
+    } else {
+      throw new Error(
+        'Expected known style (`github`, `twitter`), not `' + style + '`'
+      )
+    }
   }
 
   return transform

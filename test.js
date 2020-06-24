@@ -17,6 +17,14 @@ function strip() {
 }
 
 test('mentions()', function (t) {
+  t.throws(
+    function () {
+      retext().use(mentions, {style: '!'}).freeze()
+    },
+    /^Error: Expected known style/,
+    'should throw when an incorrect style name is passed'
+  )
+
   t.deepLooseEqual(
     position.runSync(position.parse('This @wooorm and @foo/bar.')),
     u('RootNode', pos(1, 1, 0, 1, 27, 26), [
