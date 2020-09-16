@@ -1,4 +1,4 @@
-# retext-syntax-mentions
+# retext-syntax-mentions-channels
 
 [![Build][build-badge]][build]
 [![Coverage][coverage-badge]][coverage]
@@ -10,19 +10,25 @@
 
 [**retext**][retext] plugin to classify
 [**@mentions**](https://github.com/blog/821) as [syntax][source], not natural
-language.
+language. It also ignores chat channels like the ones used on Slack, for example
+`#this-is-a-channel`.
+
+**DISCLAIMER**: This is a modified version of
+[retext-syntax-mentions](https://github.com/retextjs/retext-syntax-mentions).
+There are some links in the documentation that are still mentioning this project
+as its original name.
 
 ## Install
 
 [npm][]:
 
 ```sh
-npm install retext-syntax-mentions
+npm install retext-syntax-mentions-channels
 ```
 
 ## Use
 
-Without `syntax-mentions`:
+Without `syntax-mentions-channels`:
 
 ```js
 var dictionary = require('dictionary-en-gb')
@@ -30,7 +36,7 @@ var unified = require('unified')
 var english = require('retext-english')
 var stringify = require('retext-stringify')
 var spell = require('retext-spell')
-var mentions = require('retext-syntax-mentions')
+var mentions = require('retext-syntax-mentions-channels')
 var report = require('vfile-reporter')
 
 unified()
@@ -50,7 +56,7 @@ Yields:
 ⚠ 1 warning
 ```
 
-With `syntax-mentions`:
+With `syntax-mentions-channels`:
 
 ```diff
    .use(english)
@@ -66,18 +72,12 @@ no issues found
 
 ## API
 
-### `retext().use(mentions[, options])`
+### `retext().use(mentions)`
 
 Classify [**@mentions**](https://github.com/blog/821) as [**source**][source],
 which represent “external (ungrammatical) values” instead of natural language.
 This hides mentions from [`retext-spell`][spell],
 [`retext-readability`][readability], [`retext-equality`][equality], and more.
-
-###### `options.style`
-
-Style can be either `'github'` (for GitHub user and team mentions), `'twitter'`
-(for Twitter handles), or a regular expression (such as `/^@\w{1,15}$/i`, which
-is the Twitter regex).
 
 ## Related
 
@@ -96,8 +96,8 @@ See [`contributing.md`][contributing] in [`retextjs/.github`][health] for ways
 to get started.
 See [`support.md`][support] for ways to get help.
 
-This project has a [code of conduct][coc].
-By interacting with this repository, organization, or community you agree to
+This project has a [Code of Conduct][coc].
+By interacting with this repository, organisation, or community you agree to
 abide by its terms.
 
 ## License
@@ -128,19 +128,19 @@ abide by its terms.
 
 [collective]: https://opencollective.com/unified
 
-[chat-badge]: https://img.shields.io/badge/chat-discussions-success.svg
+[chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
 
-[chat]: https://github.com/retextjs/retext/discussions
+[chat]: https://spectrum.chat/unified/retext
 
 [npm]: https://docs.npmjs.com/cli/install
 
 [health]: https://github.com/retextjs/.github
 
-[contributing]: https://github.com/retextjs/.github/blob/HEAD/contributing.md
+[contributing]: https://github.com/retextjs/.github/blob/master/contributing.md
 
-[support]: https://github.com/retextjs/.github/blob/HEAD/support.md
+[support]: https://github.com/retextjs/.github/blob/master/support.md
 
-[coc]: https://github.com/retextjs/.github/blob/HEAD/code-of-conduct.md
+[coc]: https://github.com/retextjs/.github/blob/master/code-of-conduct.md
 
 [license]: license
 

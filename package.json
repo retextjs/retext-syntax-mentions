@@ -1,7 +1,7 @@
 {
-  "name": "retext-syntax-mentions",
-  "version": "2.1.1",
-  "description": "retext plugin to classify @mentions as syntax, not natural language",
+  "name": "retext-syntax-mentions-channels",
+  "version": "2.2.0",
+  "description": "retext plugin to classify @mentions and #channels as syntax, not natural language",
   "license": "MIT",
   "keywords": [
     "unified",
@@ -14,17 +14,25 @@
     "mentions",
     "github",
     "twitter",
-    "social"
+    "social",
+    "channels",
+    "slack"
   ],
-  "repository": "retextjs/retext-syntax-mentions",
-  "bugs": "https://github.com/retextjs/retext-syntax-mentions/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/destornillador/retext-syntax-mentions-channels.git"
+  },
+  "bugs": {
+    "url": "https://github.com/destornillador/retext-syntax-mentions-channels/issues"
+  },
   "funding": {
     "type": "opencollective",
     "url": "https://opencollective.com/unified"
   },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
   "contributors": [
-    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+    "Ivan Martinez <martinez.ivan.daniel@gmail.com>"
   ],
   "files": [
     "index.js"
@@ -81,5 +89,7 @@
     "plugins": [
       "preset-wooorm"
     ]
-  }
+  },
+  "homepage": "https://github.com/destornillador/retext-syntax-mentions-channels#README",
+  "main": "index.js"
 }
