@@ -10,8 +10,8 @@
 
 [**retext**][retext] plugin to classify
 [**@mentions**](https://github.com/blog/821) as [syntax][source], not natural
-language. It also ignores chat channels like the ones used on Slack, for example
-`#this-is-a-channel`.
+language.  It also ignores chat channels like the ones used on Slack, for 
+example `#this-is-a-channel`.
 
 **DISCLAIMER**: This is a modified version of
 [retext-syntax-mentions](https://github.com/retextjs/retext-syntax-mentions).

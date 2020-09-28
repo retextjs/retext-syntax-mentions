@@ -38,7 +38,7 @@ function mentions(options) {
     var offset = index
     var slice
 
-    if (toString(node) !== '@') {
+    if (toString(node) !== '@' && toString(node) !== '#') {
       return
     }
 
