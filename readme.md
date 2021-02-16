@@ -106,9 +106,9 @@ abide by its terms.
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/retextjs/retext-syntax-mentions.svg
+[build-badge]: https://github.com/retextjs/retext-syntax-mentions/workflows/main/badge.svg
 
-[build]: https://travis-ci.org/retextjs/retext-syntax-mentions
+[build]: https://github.com/retextjs/retext-syntax-mentions/actions
 
 [coverage-badge]: https://img.shields.io/codecov/c/github/retextjs/retext-syntax-mentions.svg
 
