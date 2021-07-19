@@ -4,8 +4,8 @@ import {u} from 'unist-builder'
 import {removePosition} from 'unist-util-remove-position'
 import retextSyntaxMentions from './index.js'
 
-var position = retext().use(retextSyntaxMentions)
-var noPosition = retext().use(retextSyntaxMentions).use(strip)
+const position = retext().use(retextSyntaxMentions)
+const noPosition = retext().use(retextSyntaxMentions).use(strip)
 
 function strip() {
   return transformer
@@ -14,9 +14,9 @@ function strip() {
   }
 }
 
-test('retext-syntax-mentions', function (t) {
+test('retext-syntax-mentions', (t) => {
   t.throws(
-    function () {
+    () => {
       retext().use(retextSyntaxMentions, {style: '!'}).freeze()
     },
     /^Error: Expected known style/,

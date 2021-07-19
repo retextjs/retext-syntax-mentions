@@ -2,76 +2,69 @@ import {toString} from 'nlcst-to-string'
 import {pointStart, pointEnd} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
 
-var genitive = /['’]s?$/i
+const genitive = /['’]s?$/i
 
-var gh =
+const gh =
   /^@(?:[a-z\d]{1,2}|[a-z\d][a-z\d-]{1,37}[a-z\d])(\/(?:[a-z\d]{1,2}|[a-z\d][a-z\d-]{1,37}[a-z\d]))?$/i
-var tw = /^@\w{1,15}$/i
+const tw = /^@\w{1,15}$/i
 
-export default function retextSyntaxMentions(options) {
-  var style = (options || {}).style || 'github'
+export default function retextSyntaxMentions(options = {}) {
+  const style = options.style || 'github'
+  let styleRe
 
-  if (typeof style === 'string') {
-    if (style === 'github') {
-      style = gh
-    } else if (style === 'twitter') {
-      style = tw
-    } else {
-      throw new Error(
-        'Expected known style (`github`, `twitter`), not `' + style + '`'
-      )
-    }
+  if (style === null || style === undefined || style === 'github') {
+    styleRe = gh
+  } else if (style === 'twitter') {
+    styleRe = tw
+  } else if (typeof style === 'object' && 'exec' in style) {
+    styleRe = style
+  } else {
+    throw new Error(
+      'Expected known style (`github`, `twitter`), not `' + style + '`'
+    )
   }
 
-  return transform
+  return (tree) => {
+    visit(tree, 'SymbolNode', (node, index, parent) => {
+      const siblings = parent.children
 
-  function transform(tree) {
-    visit(tree, 'SymbolNode', visitor)
-  }
-
-  function visitor(node, index, parent) {
-    var siblings = parent.children
-    var length = siblings.length
-    var offset = index
-    var slice
-
-    if (toString(node) !== '@') {
-      return
-    }
-
-    offset++
-
-    while (offset <= length) {
-      if (offset === length) break
-      if (siblings[offset].type === 'WhiteSpaceNode') break
-
-      if (
-        toString(siblings[offset]) !== '/' &&
-        !check(siblings.slice(index, offset + 1))
-      ) {
-        break
+      if (toString(node) !== '@') {
+        return
       }
 
-      offset++
-    }
+      let offset = index + 1
 
-    slice = siblings.slice(index, offset)
+      while (offset < siblings.length) {
+        if (siblings[offset].type === 'WhiteSpaceNode') break
 
-    if (!check(slice)) {
-      return
-    }
+        if (
+          toString(siblings[offset]) !== '/' &&
+          !check(siblings.slice(index, offset + 1))
+        ) {
+          break
+        }
 
-    siblings.splice(index, offset - index, {
-      type: 'SourceNode',
-      value: toString(slice),
-      position: {
-        start: pointStart(node),
-        end: pointEnd(slice[slice.length - 1])
+        offset++
       }
+
+      const slice = siblings.slice(index, offset)
+
+      if (!check(slice)) {
+        return
+      }
+
+      siblings.splice(index, offset - index, {
+        type: 'SourceNode',
+        value: toString(slice),
+        position: {
+          start: pointStart(node),
+          end: pointEnd(slice[slice.length - 1])
+        }
+      })
     })
   }
 
   function check(nodes) {
-    return style.test(toString(nodes).replace(genitive, ''))
+    return styleRe.test(toString(nodes).replace(genitive, ''))
   }
 }
