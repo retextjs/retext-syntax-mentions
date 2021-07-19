@@ -1,6 +1,6 @@
-import visit from 'unist-util-visit'
-import position from 'unist-util-position'
-import toString from 'nlcst-to-string'
+import {toString} from 'nlcst-to-string'
+import {pointStart, pointEnd} from 'unist-util-position'
+import {visit} from 'unist-util-visit'
 
 var genitive = /['’]s?$/i
 
@@ -65,8 +65,8 @@ export default function retextSyntaxMentions(options) {
       type: 'SourceNode',
       value: toString(slice),
       position: {
-        start: position.start(node),
-        end: position.end(slice[slice.length - 1])
+        start: pointStart(node),
+        end: pointEnd(slice[slice.length - 1])
       }
     })
   }
