@@ -1,3 +1,12 @@
+/**
+ * @typedef Options
+ *   Configuration.
+ * @property {'github'|'twitter'|RegExp|null|undefined} [style='github']
+ *   Style can be either `'github'` (for GitHub user and team mentions),
+ *   `'twitter'` (for Twitter handles), or a regular expression (such as
+ *   `/^@\w{1,15}$/i`, which is the Twitter regex).
+ */
+
 import {toString} from 'nlcst-to-string'
 import {pointStart, pointEnd} from 'unist-util-position'
 import {visit} from 'unist-util-visit'
@@ -8,8 +17,22 @@ const gh =
   /^@(?:[a-z\d]{1,2}|[a-z\d][a-z\d-]{1,37}[a-z\d])(\/(?:[a-z\d]{1,2}|[a-z\d][a-z\d-]{1,37}[a-z\d]))?$/i
 const tw = /^@\w{1,15}$/i
 
+/**
+ * Plugin to classify @mentions as source, which represents “external
+ * (ungrammatical) values” instead of natural language.
+ * This hides mentions from `retext-spell`, `retext-readability`,
+ * `retext-equality`.
+ *
+ * @type {import('unified').Plugin<[Options?]>}
+ */
 export default function retextSyntaxMentions(options = {}) {
+  /**
+   * @typedef {import('unist').Node<unknown>} Node
+   * @typedef {import('unist').Literal<string>} Literal
+   */
+
   const style = options.style || 'github'
+  /** @type {RegExp} */
   let styleRe
 
   if (style === null || style === undefined || style === 'github') {
@@ -26,12 +49,11 @@ export default function retextSyntaxMentions(options = {}) {
 
   return (tree) => {
     visit(tree, 'SymbolNode', (node, index, parent) => {
-      const siblings = parent.children
-
-      if (toString(node) !== '@') {
+      if (toString(node) !== '@' || !parent || index === null) {
         return
       }
 
+      const siblings = parent.children
       let offset = index + 1
 
       while (offset < siblings.length) {
@@ -53,17 +75,24 @@ export default function retextSyntaxMentions(options = {}) {
         return
       }
 
-      siblings.splice(index, offset - index, {
+      /** @type {Literal} */
+      const replacement = {
         type: 'SourceNode',
         value: toString(slice),
         position: {
           start: pointStart(node),
           end: pointEnd(slice[slice.length - 1])
         }
-      })
+      }
+
+      siblings.splice(index, offset - index, replacement)
     })
   }
 
+  /**
+   * @param {Node[]} nodes
+   * @returns {boolean}
+   */
   function check(nodes) {
     return styleRe.test(toString(nodes).replace(genitive, ''))
   }

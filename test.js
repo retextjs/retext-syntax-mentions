@@ -4,19 +4,18 @@ import {u} from 'unist-builder'
 import {removePosition} from 'unist-util-remove-position'
 import retextSyntaxMentions from './index.js'
 
+/** @type {import('unified').Plugin<[]>} */
+const strip = () => (tree) => {
+  removePosition(tree, true)
+}
+
 const position = retext().use(retextSyntaxMentions)
 const noPosition = retext().use(retextSyntaxMentions).use(strip)
-
-function strip() {
-  return transformer
-  function transformer(tree) {
-    removePosition(tree, true)
-  }
-}
 
 test('retext-syntax-mentions', (t) => {
   t.throws(
     () => {
+      // @ts-expect-error: runtime.
       retext().use(retextSyntaxMentions, {style: '!'}).freeze()
     },
     /^Error: Expected known style/,
@@ -275,6 +274,14 @@ test('retext-syntax-mentions', (t) => {
   t.end()
 })
 
+/**
+ * @param {number} l1
+ * @param {number} c1
+ * @param {number} o1
+ * @param {number} l2
+ * @param {number} c2
+ * @param {number} o2
+ */
 // eslint-disable-next-line max-params
 function pos(l1, c1, o1, l2, c2, o2) {
   return {
