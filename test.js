@@ -1,10 +1,8 @@
-'use strict'
-
-var test = require('tape')
-var retext = require('retext')
-var u = require('unist-builder')
-var clean = require('unist-util-remove-position')
-var mentions = require('.')
+import test from 'tape'
+import retext from 'retext'
+import u from 'unist-builder'
+import clean from 'unist-util-remove-position'
+import mentions from './index.js'
 
 var position = retext().use(mentions)
 var noPosition = retext().use(mentions).use(strip)

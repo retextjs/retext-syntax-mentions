@@ -1,10 +1,6 @@
-'use strict'
-
-var visit = require('unist-util-visit')
-var position = require('unist-util-position')
-var toString = require('nlcst-to-string')
-
-module.exports = mentions
+import visit from 'unist-util-visit'
+import position from 'unist-util-position'
+import toString from 'nlcst-to-string'
 
 var genitive = /['’]s?$/i
 
@@ -12,7 +8,7 @@ var gh =
   /^@(?:[a-z\d]{1,2}|[a-z\d][a-z\d-]{1,37}[a-z\d])(\/(?:[a-z\d]{1,2}|[a-z\d][a-z\d-]{1,37}[a-z\d]))?$/i
 var tw = /^@\w{1,15}$/i
 
-function mentions(options) {
+export default function retextSyntaxMentions(options) {
   var style = (options || {}).style || 'github'
 
   if (typeof style === 'string') {
