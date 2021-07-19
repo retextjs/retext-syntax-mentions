@@ -1,5 +1,2 @@
 coverage/
-retext-syntax-mentions.js
-retext-syntax-mentions.min.js
-*.json
 *.md

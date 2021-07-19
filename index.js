@@ -8,7 +8,8 @@ module.exports = mentions
 
 var genitive = /['’]s?$/i
 
-var gh = /^@(?:[a-z\d]{1,2}|[a-z\d][a-z\d-]{1,37}[a-z\d])(\/(?:[a-z\d]{1,2}|[a-z\d][a-z\d-]{1,37}[a-z\d]))?$/i
+var gh =
+  /^@(?:[a-z\d]{1,2}|[a-z\d][a-z\d-]{1,37}[a-z\d])(\/(?:[a-z\d]{1,2}|[a-z\d][a-z\d-]{1,37}[a-z\d]))?$/i
 var tw = /^@\w{1,15}$/i
 
 function mentions(options) {
