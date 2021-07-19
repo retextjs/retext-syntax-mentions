@@ -14,6 +14,9 @@ language.
 
 ## Install
 
+This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
+Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
+
 [npm][]:
 
 ```sh
@@ -25,20 +28,21 @@ npm install retext-syntax-mentions
 Without `syntax-mentions`:
 
 ```js
-var dictionary = require('dictionary-en-gb')
-var unified = require('unified')
-var english = require('retext-english')
-var stringify = require('retext-stringify')
-var spell = require('retext-spell')
-var mentions = require('retext-syntax-mentions')
-var report = require('vfile-reporter')
+import dictionary from 'dictionary-en-gb'
+import {reporter} from 'vfile-reporter'
+import {unified} from 'unified'
+import retextEnglish from 'retext-english'
+import retextSyntaxMentions from 'retext-syntax-mentions'
+import retextSpell from 'retext-spell'
+import retextStringify from 'retext-stringify'
 
 unified()
-  .use(english)
-  .use(spell, dictionary)
-  .use(stringify)
-  .process('Misspelt? @wooorm.', function(err, file) {
-    console.log(report(err || file))
+  .use(retextEnglish)
+  .use(retextSpell, dictionary)
+  .use(retextStringify)
+  .process('Misspelt? @wooorm.')
+  .then((file) => {
+    console.log(reporter(file))
   })
 ```
 
@@ -53,9 +57,9 @@ Yields:
 With `syntax-mentions`:
 
 ```diff
-   .use(english)
-+  .use(mentions)
-   .use(spell, dictionary)
+   .use(retextEnglish)
++  .use(retextSyntaxMentions)
+   .use(retextSpell, dictionary)
 ```
 
 Yields:
@@ -66,7 +70,10 @@ no issues found
 
 ## API
 
-### `retext().use(mentions[, options])`
+This package exports no identifiers.
+The default export is `retextSyntaxMentions`.
+
+### `unified().use(retextSyntaxMentions[, options])`
 
 Classify [**@mentions**](https://github.com/blog/821) as [**source**][source],
 which represent “external (ungrammatical) values” instead of natural language.
