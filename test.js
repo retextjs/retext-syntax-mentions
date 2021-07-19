@@ -1,23 +1,23 @@
 import test from 'tape'
-import retext from 'retext'
-import u from 'unist-builder'
-import clean from 'unist-util-remove-position'
-import mentions from './index.js'
+import {retext} from 'retext'
+import {u} from 'unist-builder'
+import {removePosition} from 'unist-util-remove-position'
+import retextSyntaxMentions from './index.js'
 
-var position = retext().use(mentions)
-var noPosition = retext().use(mentions).use(strip)
+var position = retext().use(retextSyntaxMentions)
+var noPosition = retext().use(retextSyntaxMentions).use(strip)
 
 function strip() {
   return transformer
   function transformer(tree) {
-    clean(tree, true)
+    removePosition(tree, true)
   }
 }
 
-test('mentions()', function (t) {
+test('retext-syntax-mentions', function (t) {
   t.throws(
     function () {
-      retext().use(mentions, {style: '!'}).freeze()
+      retext().use(retextSyntaxMentions, {style: '!'}).freeze()
     },
     /^Error: Expected known style/,
     'should throw when an incorrect style name is passed'
@@ -216,7 +216,7 @@ test('mentions()', function (t) {
 
   t.deepEqual(
     retext()
-      .use(mentions, {style: 'twitter'})
+      .use(retextSyntaxMentions, {style: 'twitter'})
       .use(strip)
       .runSync(
         noPosition.parse(
@@ -250,7 +250,7 @@ test('mentions()', function (t) {
 
   t.deepEqual(
     retext()
-      .use(mentions, {style: /^@[a-z]{1,15}$/i})
+      .use(retextSyntaxMentions, {style: /^@[a-z]{1,15}$/i})
       .use(strip)
       .runSync(noPosition.parse('@lettersOnly, no @123123 digits.')),
     u('RootNode', [
