@@ -1,4 +1,11 @@
 /**
+ * @typedef {import('nlcst').Root} Root
+ * @typedef {import('nlcst').Sentence} Sentence
+ * @typedef {import('nlcst').Word} Word
+ * @typedef {import('nlcst').Source} Source
+ * @typedef {import('nlcst').SentenceContent} SentenceContent
+ * @typedef {import('nlcst').WordContent} WordContent
+ *
  * @typedef Options
  *   Configuration.
  * @property {'github'|'twitter'|RegExp|null|undefined} [style='github']
@@ -23,14 +30,9 @@ const tw = /^@\w{1,15}$/i
  * This hides mentions from `retext-spell`, `retext-readability`,
  * `retext-equality`.
  *
- * @type {import('unified').Plugin<[Options?]>}
+ * @type {import('unified').Plugin<[Options?], Root>}
  */
 export default function retextSyntaxMentions(options = {}) {
-  /**
-   * @typedef {import('unist').Node<unknown>} Node
-   * @typedef {import('unist').Literal<string>} Literal
-   */
-
   const style = options.style || 'github'
   /** @type {RegExp} */
   let styleRe
@@ -48,7 +50,9 @@ export default function retextSyntaxMentions(options = {}) {
   }
 
   return (tree) => {
-    visit(tree, 'SymbolNode', (node, index, parent) => {
+    visit(tree, 'SymbolNode', (node, index, parent_) => {
+      const parent = /** @type {Sentence|Word} */ (parent_)
+
       if (toString(node) !== '@' || !parent || index === null) {
         return
       }
@@ -75,7 +79,7 @@ export default function retextSyntaxMentions(options = {}) {
         return
       }
 
-      /** @type {Literal} */
+      /** @type {Source} */
       const replacement = {
         type: 'SourceNode',
         value: toString(slice),
@@ -90,7 +94,7 @@ export default function retextSyntaxMentions(options = {}) {
   }
 
   /**
-   * @param {Node[]} nodes
+   * @param {SentenceContent[]|WordContent[]} nodes
    * @returns {boolean}
    */
   function check(nodes) {
