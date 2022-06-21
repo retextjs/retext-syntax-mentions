@@ -7,7 +7,7 @@
  * @typedef {import('nlcst').WordContent} WordContent
  *
  * @typedef Options
- *   Configuration.
+ *   Configuration (optional).
  * @property {'github'|'twitter'|RegExp|null|undefined} [style='github']
  *   Style can be either `'github'` (for GitHub user and team mentions),
  *   `'twitter'` (for Twitter handles), or a regular expression (such as
@@ -94,7 +94,7 @@ export default function retextSyntaxMentions(options = {}) {
   }
 
   /**
-   * @param {SentenceContent[]|WordContent[]} nodes
+   * @param {Array<SentenceContent>|Array<WordContent>} nodes
    * @returns {boolean}
    */
   function check(nodes) {
