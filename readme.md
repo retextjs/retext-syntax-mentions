@@ -8,19 +8,59 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-[**retext**][retext] plugin to classify
-[**@mentions**](https://github.com/blog/821) as [syntax][source], not natural
+**[retext][]** plugin to classify `@mentions` as syntax instead of natural
 language.
+
+## Contents
+
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`retext().use(retextSyntaxMentions[, options])`](#retextuseretextsyntaxmentions-options)
+*   [Types](#types)
+*   [Compatibility](#compatibility)
+*   [Related](#related)
+*   [Contribute](#contribute)
+*   [License](#license)
+
+## What is this?
+
+This package is a [unified][] ([retext][]) plugin to classify mentions (as used
+on for example [GitHub][mention]) as [`SourceNode`][source] instead of natural
+language.
+That node represent “external (ungrammatical) values” instead of natural
+language, which hides mentions from [`retext-spell`][retext-spell],
+[`retext-readability`][retext-readability],
+[`retext-equality`][retext-equality], and other things that check words.
+
+## When should I use this?
+
+You can use this plugin any time there are mentions in prose, that are
+(incorrectly) warned about by linting plugins.
 
 ## Install
 
-This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
-Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
-
-[npm][]:
+This package is [ESM only][esm].
+In Node.js (version 12.20+, 14.14+, 16.0+, or 18.0+), install with [npm][]:
 
 ```sh
 npm install retext-syntax-mentions
+```
+
+In Deno with [`esm.sh`][esmsh]:
+
+```js
+import retextSyntaxMentions from 'https://esm.sh/retext-syntax-mentions@3'
+```
+
+In browsers with [`esm.sh`][esmsh]:
+
+```html
+<script type="module">
+  import retextSyntaxMentions from 'https://esm.sh/retext-syntax-mentions@3?bundle'
+</script>
 ```
 
 ## Use
@@ -36,14 +76,13 @@ import retextSyntaxMentions from 'retext-syntax-mentions'
 import retextSpell from 'retext-spell'
 import retextStringify from 'retext-stringify'
 
-unified()
+const file = await unified()
   .use(retextEnglish)
   .use(retextSpell, dictionary)
   .use(retextStringify)
   .process('Misspelt? @wooorm.')
-  .then((file) => {
-    console.log(reporter(file))
-  })
+
+console.log(reporter(file))
 ```
 
 Yields:
@@ -73,12 +112,13 @@ no issues found
 This package exports no identifiers.
 The default export is `retextSyntaxMentions`.
 
-### `unified().use(retextSyntaxMentions[, options])`
+### `retext().use(retextSyntaxMentions[, options])`
 
-Classify [**@mentions**](https://github.com/blog/821) as [**source**][source],
-which represent “external (ungrammatical) values” instead of natural language.
-This hides mentions from [`retext-spell`][spell],
-[`retext-readability`][readability], [`retext-equality`][equality], and more.
+Classify `@mentions` as syntax instead of natural language.
+
+##### `options`
+
+Configuration (optional).
 
 ###### `options.style`
 
@@ -86,16 +126,28 @@ Style can be either `'github'` (for GitHub user and team mentions), `'twitter'`
 (for Twitter handles), or a regular expression (such as `/^@\w{1,15}$/i`, which
 is the Twitter regex).
 
+## Types
+
+This package is fully typed with [TypeScript][].
+It exports the additional type `Options`.
+
+## Compatibility
+
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, 16.0+, and 18.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
+
 ## Related
 
-*   [`retext-syntax-urls`][syntax-urls]
-    — Classify URLs and filepaths as syntax
-*   [`retext-spell`][spell]
-    — Check spelling
-*   [`retext-readability`][readability]
-    — Check readability
-*   [`retext-equality`][equality]
-    — Check possible insensitive, inconsiderate language
+*   [`retext-syntax-urls`][retext-syntax-urls]
+    — classify URLs and filepaths as syntax
+*   [`retext-spell`][retext-spell]
+    — check spelling
+*   [`retext-readability`][retext-readability]
+    — check readability
+*   [`retext-equality`][retext-equality]
+    — check possible insensitive, inconsiderate language
 
 ## Contribute
 
@@ -143,24 +195,34 @@ abide by its terms.
 
 [health]: https://github.com/retextjs/.github
 
-[contributing]: https://github.com/retextjs/.github/blob/HEAD/contributing.md
+[contributing]: https://github.com/retextjs/.github/blob/main/contributing.md
 
-[support]: https://github.com/retextjs/.github/blob/HEAD/support.md
+[support]: https://github.com/retextjs/.github/blob/main/support.md
 
-[coc]: https://github.com/retextjs/.github/blob/HEAD/code-of-conduct.md
+[coc]: https://github.com/retextjs/.github/blob/main/code-of-conduct.md
+
+[esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[esmsh]: https://esm.sh
+
+[typescript]: https://www.typescriptlang.org
 
 [license]: license
 
 [author]: https://wooorm.com
 
+[unified]: https://github.com/unifiedjs/unified
+
 [retext]: https://github.com/retextjs/retext
 
 [source]: https://github.com/syntax-tree/nlcst#source
 
-[spell]: https://github.com/retextjs/retext-spell
+[retext-spell]: https://github.com/retextjs/retext-spell
 
-[readability]: https://github.com/retextjs/retext-readability
+[retext-readability]: https://github.com/retextjs/retext-readability
 
-[equality]: https://github.com/retextjs/retext-equality
+[retext-equality]: https://github.com/retextjs/retext-equality
 
-[syntax-urls]: https://github.com/retextjs/retext-syntax-urls
+[retext-syntax-urls]: https://github.com/retextjs/retext-syntax-urls
+
+[mention]: https://github.com/blog/821
