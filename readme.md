@@ -18,7 +18,7 @@ language.
 *   [Install](#install)
 *   [Use](#use)
 *   [API](#api)
-    *   [`retext().use(retextSyntaxMentions[, options])`](#retextuseretextsyntaxmentions-options)
+    *   [`unified().use(retextSyntaxMentions[, options])`](#unifieduseretextsyntaxmentions-options)
 *   [Types](#types)
 *   [Compatibility](#compatibility)
 *   [Related](#related)
@@ -65,7 +65,7 @@ In browsers with [`esm.sh`][esmsh]:
 
 ## Use
 
-Without `syntax-mentions`:
+Without `retext-syntax-mentions`:
 
 ```js
 import dictionary from 'dictionary-en-gb'
@@ -93,7 +93,7 @@ Yields:
 ⚠ 1 warning
 ```
 
-With `syntax-mentions`:
+With `retext-syntax-mentions`:
 
 ```diff
    .use(retextEnglish)
@@ -112,7 +112,7 @@ no issues found
 This package exports no identifiers.
 The default export is `retextSyntaxMentions`.
 
-### `retext().use(retextSyntaxMentions[, options])`
+### `unified().use(retextSyntaxMentions[, options])`
 
 Classify `@mentions` as syntax instead of natural language.
 
