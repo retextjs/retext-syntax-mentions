@@ -81,13 +81,11 @@ export default function retextSyntaxMentions(options = {}) {
 
       const start = pointStart(node)
       const end = pointEnd(slice[slice.length - 1])
+      /* c8 ignore next -- hard to test */
+      const position = start && end ? {start, end} : undefined
 
       /** @type {Source} */
-      const replacement = {
-        type: 'SourceNode',
-        value: toString(slice),
-        position: start && end ? {start, end} : undefined
-      }
+      const replacement = {type: 'SourceNode', value: toString(slice), position}
 
       siblings.splice(index, offset - index, replacement)
     })
