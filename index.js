@@ -53,7 +53,7 @@ export default function retextSyntaxMentions(options = {}) {
     visit(tree, 'SymbolNode', (node, index, parent_) => {
       const parent = /** @type {Sentence|Word} */ (parent_)
 
-      if (toString(node) !== '@' || !parent || index === null) {
+      if (toString(node) !== '@' || !parent || index === undefined) {
         return
       }
 
@@ -79,14 +79,14 @@ export default function retextSyntaxMentions(options = {}) {
         return
       }
 
+      const start = pointStart(node)
+      const end = pointEnd(slice[slice.length - 1])
+
       /** @type {Source} */
       const replacement = {
         type: 'SourceNode',
         value: toString(slice),
-        position: {
-          start: pointStart(node),
-          end: pointEnd(slice[slice.length - 1])
-        }
+        position: start && end ? {start, end} : undefined
       }
 
       siblings.splice(index, offset - index, replacement)

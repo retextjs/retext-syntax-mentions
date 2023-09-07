@@ -6,7 +6,7 @@ import retextSyntaxMentions from './index.js'
 
 /** @type {import('unified').Plugin<[]>} */
 const strip = () => (tree) => {
-  removePosition(tree, true)
+  removePosition(tree, {force: true})
 }
 
 const position = retext().use(retextSyntaxMentions)
