@@ -1,16 +1,17 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import {ParseEnglish} from 'parse-english'
+import retextSyntaxMentions from 'retext-syntax-mentions'
 import {unified} from 'unified'
 import {u} from 'unist-builder'
 import {removePosition} from 'unist-util-remove-position'
-import retextSyntaxMentions from './index.js'
 
 test('retext-syntax-mentions', async function (t) {
   await t.test('should expose the public api', async function () {
-    assert.deepEqual(Object.keys(await import('./index.js')).sort(), [
-      'default'
-    ])
+    assert.deepEqual(
+      Object.keys(await import('retext-syntax-mentions')).sort(),
+      ['default']
+    )
   })
 
   await t.test(
