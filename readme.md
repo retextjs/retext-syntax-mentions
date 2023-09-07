@@ -53,14 +53,14 @@ npm install retext-syntax-mentions
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import retextSyntaxMentions from 'https://esm.sh/retext-syntax-mentions@3'
+import retextSyntaxMentions from 'https://esm.sh/retext-syntax-mentions@4'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import retextSyntaxMentions from 'https://esm.sh/retext-syntax-mentions@3?bundle'
+  import retextSyntaxMentions from 'https://esm.sh/retext-syntax-mentions@4?bundle'
 </script>
 ```
 
