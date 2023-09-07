@@ -19,6 +19,7 @@ language.
 *   [Use](#use)
 *   [API](#api)
     *   [`unified().use(retextSyntaxMentions[, options])`](#unifieduseretextsyntaxmentions-options)
+    *   [`Options`](#options)
 *   [Types](#types)
 *   [Compatibility](#compatibility)
 *   [Related](#related)
@@ -28,8 +29,8 @@ language.
 ## What is this?
 
 This package is a [unified][] ([retext][]) plugin to classify mentions (as used
-on for example [GitHub][mention]) as [`SourceNode`][source] instead of natural
-language.
+on for example [GitHub][mention]) as [`SourceNode`][nlcst-source] instead of
+natural language.
 That node represent “external (ungrammatical) values” instead of natural
 language, which hides mentions from [`retext-spell`][retext-spell],
 [`retext-readability`][retext-readability],
@@ -43,7 +44,7 @@ You can use this plugin any time there are mentions in prose, that are
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 12.20+, 14.14+, 16.0+, or 18.0+), install with [npm][]:
+In Node.js (version 16+), install with [npm][]:
 
 ```sh
 npm install retext-syntax-mentions
@@ -68,19 +69,19 @@ In browsers with [`esm.sh`][esmsh]:
 Without `retext-syntax-mentions`:
 
 ```js
-import dictionary from 'dictionary-en-gb'
-import {reporter} from 'vfile-reporter'
-import {unified} from 'unified'
+import dictionaryEn from 'dictionary-en'
 import retextEnglish from 'retext-english'
-import retextSyntaxMentions from 'retext-syntax-mentions'
 import retextSpell from 'retext-spell'
 import retextStringify from 'retext-stringify'
+import retextSyntaxMentions from 'retext-syntax-mentions'
+import {unified} from 'unified'
+import {reporter} from 'vfile-reporter'
 
 const file = await unified()
   .use(retextEnglish)
-  .use(retextSpell, dictionary)
+  .use(retextSpell, dictionaryEn)
   .use(retextStringify)
-  .process('Misspelt? @wooorm.')
+  .process('Misspelled? @wooorm.')
 
 console.log(reporter(file))
 ```
@@ -88,7 +89,7 @@ console.log(reporter(file))
 Yields:
 
 ```txt
-  1:12-1:18  warning  `wooorm` is misspelt; did you mean `worm`?  retext-spell  retext-spell
+1:14-1:20 warning `wooorm` is misspelt; did you mean `worm`? wooorm retext-spell
 
 ⚠ 1 warning
 ```
@@ -98,7 +99,7 @@ With `retext-syntax-mentions`:
 ```diff
    .use(retextEnglish)
 +  .use(retextSyntaxMentions)
-   .use(retextSpell, dictionary)
+   .use(retextSpell, dictionaryEn)
 ```
 
 Yields:
@@ -110,33 +111,50 @@ no issues found
 ## API
 
 This package exports no identifiers.
-The default export is `retextSyntaxMentions`.
+The default export is [`retextSyntaxMentions`][api-retext-syntax-mentions].
 
 ### `unified().use(retextSyntaxMentions[, options])`
 
-Classify `@mentions` as syntax instead of natural language.
+Classify `@mentions` as source (external ungrammatical values) instead of
+natural language.
 
-##### `options`
+This hides mentions from `retext-spell`, `retext-readability`,
+`retext-equality`, etc.
 
-Configuration (optional).
+###### Parameters
 
-###### `options.style`
+*   `options` ([`Options`][api-options], optional)
+    — configuration
 
-Style can be either `'github'` (for GitHub user and team mentions), `'twitter'`
-(for Twitter handles), or a regular expression (such as `/^@\w{1,15}$/i`, which
-is the Twitter regex).
+###### Returns
+
+Transform ([`Transformer`][unified-transformer]).
+
+### `Options`
+
+Configuration (TypeScript type).
+
+###### Fields
+
+*   `style` (`RegExp | 'github' | 'twitter'`, default: `'github'`)
+    — style of mentions; can be either `'github'` (for GitHub user and team
+    mentions), `'twitter'` (for Twitter handles), or a regular expression (such
+    as `/^@\w{1,15}$/i`, which is the Twitter regex
 
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports the additional type `Options`.
+It exports the additional type [`Options`][api-options].
 
 ## Compatibility
 
-Projects maintained by the unified collective are compatible with all maintained
+Projects maintained by the unified collective are compatible with maintained
 versions of Node.js.
-As of now, that is Node.js 12.20+, 14.14+, 16.0+, and 18.0+.
-Our projects sometimes work with older versions, but this is not guaranteed.
+
+When we cut a new major release, we drop support for unmaintained versions of
+Node.
+This means we try to keep the current release line,
+`retext-syntax-mentions@^3`, compatible with Node.js 12.
 
 ## Related
 
@@ -177,9 +195,9 @@ abide by its terms.
 
 [downloads]: https://www.npmjs.com/package/retext-syntax-mentions
 
-[size-badge]: https://img.shields.io/bundlephobia/minzip/retext-syntax-mentions.svg
+[size-badge]: https://img.shields.io/bundlejs/size/retext-syntax-mentions
 
-[size]: https://bundlephobia.com/result?p=retext-syntax-mentions
+[size]: https://bundlejs.com/?q=retext-syntax-mentions
 
 [sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
 
@@ -211,11 +229,11 @@ abide by its terms.
 
 [author]: https://wooorm.com
 
-[unified]: https://github.com/unifiedjs/unified
+[mention]: https://github.com/blog/821
+
+[nlcst-source]: https://github.com/syntax-tree/nlcst#source
 
 [retext]: https://github.com/retextjs/retext
-
-[source]: https://github.com/syntax-tree/nlcst#source
 
 [retext-spell]: https://github.com/retextjs/retext-spell
 
@@ -225,4 +243,10 @@ abide by its terms.
 
 [retext-syntax-urls]: https://github.com/retextjs/retext-syntax-urls
 
-[mention]: https://github.com/blog/821
+[unified]: https://github.com/unifiedjs/unified
+
+[unified-transformer]: https://github.com/unifiedjs/unified#transformer
+
+[api-options]: #options
+
+[api-retext-syntax-mentions]: #unifieduseretextsyntaxmentions-options
