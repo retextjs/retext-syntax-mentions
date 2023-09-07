@@ -1,7 +1,3 @@
-/**
- * @typedef {import('nlcst').Root} Root
- */
-
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import {ParseEnglish} from 'parse-english'
@@ -10,14 +6,20 @@ import {u} from 'unist-builder'
 import {removePosition} from 'unist-util-remove-position'
 import retextSyntaxMentions from './index.js'
 
-test('retext-syntax-mentions', async (t) => {
+test('retext-syntax-mentions', async function (t) {
+  await t.test('should expose the public api', async function () {
+    assert.deepEqual(Object.keys(await import('./index.js')).sort(), [
+      'default'
+    ])
+  })
+
   await t.test(
     'should throw when an incorrect style name is passed',
     async function () {
-      assert.throws(() => {
+      assert.throws(function () {
         // @ts-expect-error: check how the runtime handles incorrect `style`.
         unified().use(retextSyntaxMentions, {style: '!'}).freeze()
-      }, /^Error: Expected known style/)
+      }, /Expected known style/)
     }
   )
 
